@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDbCRUD", "MongoDbCRUD\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{0178CB54-70FE-4B4B-8BBC-6F118E5D2E7C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DumpFileDB", "DumpFileDB", "{A8965C6C-DB17-4245-9850-8CB686D87E83}"
+	ProjectSection(SolutionItems) = preProject
+		..\ExampleMongoDB.Test.csv = ..\ExampleMongoDB.Test.csv
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
