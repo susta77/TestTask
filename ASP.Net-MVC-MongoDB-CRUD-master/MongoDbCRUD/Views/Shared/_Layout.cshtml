@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")  <!-- Import CSS styles -->
+    @Scripts.Render("~/bundles/modernizr") <!-- Import modernizr scripts -->
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Home Page", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("New Test", "ViewTest", "Test")</li> <!-- Link to create a new test -->
+                    <li>@Html.ActionLink("New Product Test", "Index", "Product")</li> <!-- Link to create a new product test -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody() <!-- Renders the main content for the view -->
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Test Task for The Candidate Application</p> <!-- Copyright information -->
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery") <!-- Import jQuery scripts -->
+    @Scripts.Render("~/bundles/bootstrap") <!-- Import Bootstrap scripts -->
+    @RenderSection("scripts", required: false) <!-- Optional scripts section -->
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<MongoDbCRUD.Models.Test>
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<br />
+
+<div style="margin-top:10px">
+    <!-- Container for the "Generate Test" section -->
+    <div class="col-10">
+        <div class="row">
+            @Html.Label("Generate Test")
+        </div>
+        <div class="row">
+            <!-- ActionLink for creating a new test, linking to the "CreateProduct" action in the "Product" controller -->
+            @Html.ActionLink("Start", "CreateProduct", "Product", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>

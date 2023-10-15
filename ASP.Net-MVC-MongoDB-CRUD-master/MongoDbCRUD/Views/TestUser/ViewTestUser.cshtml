@@ -1,0 +1,101 @@
+﻿@model MongoDbCRUD.Models.Test
+
+@{
+    ViewBag.Title = "TestUser";
+}
+
+<h2>ViewTestUser</h2>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+@if (Model != null)
+{
+    // Execute the following code block if the Model is not null.
+    // This is a common practice to avoid errors when working with a model that might be null.
+    <script>
+    $(document).ready(function () {
+        $("form").submit(function (event) {
+            // Check if any question hasn't been answered
+             var selectedTests = $('select[name="Question"]').filter(function() {
+                return !this.value;
+            });
+            if (selectedTests.length > 0) {
+                alert("Choose an Answer for all questions.");
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+
+    });
+
+        function updateProgressBar(selectElement) {
+           
+        // Function to update the progress bar
+        var currentQuestionIndex = parseInt($("#currentQuestionIndex").val());
+        var totalQuestions = @Model.Question.Count; // Assuming that Model.Question is the list of questions
+
+        currentQuestionIndex++;
+        if (currentQuestionIndex <= totalQuestions) {
+            $("#currentQuestionIndex").val(currentQuestionIndex);
+            var progressBarWidth = (currentQuestionIndex * 100) / totalQuestions;
+            $(".progress-bar").css("width", progressBarWidth + "%");
+        } else {
+            // You've answered all the questions
+            currentQuestionIndex == 0;
+        }
+    }
+
+    </script>
+
+    using (Html.BeginForm("EditTestUser", "TestUser", FormMethod.Post))
+    {
+        @Html.Hidden("currentQuestionIndex", 0) <!-- Add hidden field for progress -->
+        <div class="progress-bar" role="progressbar" style="width:90%" aria-valuenow="@Model.currentQuestionIndex" aria-valuemin="0" aria-valuemax="@Model.totalQuestions"></div>
+
+        <div class="form-group">
+            <!-- You can leave this div empty or add a space as text -->
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <div class="col-20">
+                    <div class="row">
+                        @Html.Label(Model.TestName)    @Html.DisplayFor(model => model.User)
+                        @Html.HiddenFor(model => model.TestName)
+                        @Html.HiddenFor(model => model.SelectedTestId)
+                        @Html.HiddenFor(model => model.User)
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="divAnswer" @(Model.currentQuestionIndex == @Model.Question.Count ? "hidden=\"hidden\"" : "")>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="@Model.Question.Count"></div>
+                </div>
+                @for (int i = 0; i < Model.Question.Count; i++)
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.Label(Model.Question[i].QuestionName)
+                                @Html.HiddenFor(model => model.Question[i].QuestionName)
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+                            @Html.DropDownListFor(model => Model.Question, new SelectList(Model.Question[i].Answer, "Correct", "Text", "Text"),
+                     "Choose an Answer",
+                     new { @class = "form-control", onchange = "updateProgressBar(this)" })
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.HiddenFor(model => model.Question[i].QuestionName)
+                                @Html.HiddenFor(model => model.Question[i].Answer)
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <input type="submit" value="Save" id="saveButton" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+}

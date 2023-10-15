@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MongoDbCRUD.Models.Test>
+
+@{
+    ViewBag.Title = "ViewTest";
+}
+
+@if (Model != null)
+{
+    // Check if the Model is not null to avoid errors when working with a potentially null model.
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Execute the JavaScript code when the document is ready.
+
+            $("form").submit(function (event) {
+                // Handle the form submission event.
+
+                var userName = $("#UserName").val();
+                var selectedTestId = $("#Id").val();
+
+                if (!userName || userName == "Enter your name") {
+                    // Check if the "userName" field is empty or contains the default value.
+                    alert("Please enter your name.");
+                    event.preventDefault(); // Prevent form submission
+                } else if (!selectedTestId) {
+                    // Check if a test has been selected.
+                    alert("Please choose a test.");
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        });
+    </script>
+
+    <div class="col-auto">
+        <div class="row">
+            <h2>Test Task</h2>
+            @using (Html.BeginForm("Create", "Test", FormMethod.Post))
+            {
+                // Create a form for submitting test data.
+
+                <div class="form-group">
+                    @Html.TextBox("UserName", "Enter your name", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model)
+                </div>
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.FirstOrDefault().Id,
+                        new SelectList(Model, "Id", "TestName"),
+                        "Choose a Test",
+                        new { @class = "form-control" })
+                </div>
+                <div class"form-group">
+                    <input type="submit" value="Start" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+    </div>
+}
